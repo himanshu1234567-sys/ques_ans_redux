@@ -1,0 +1,1 @@
+export const  QUES_APP = "ques_app";
