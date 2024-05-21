@@ -6,6 +6,9 @@ import { que_action_Options } from './redux/action';
 import { useNavigation } from '@react-navigation/native';
 
 const QueWithOption = () => {
+    const questions = useSelector((state) => state.quiz);
+
+    const [goback, setGoBack] = useState(false)
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const [modalVisible, setModalVisible] = useState(false);
@@ -82,6 +85,32 @@ const QueWithOption = () => {
         setQuestion(newArr);
         console.log('Submit the answers', newArr);
     };
+    const goBack = () => {
+        const newArr = question.map((item, ind) => {
+            if (index === ind) {
+                return {
+                    ...item, ans: selectedValue
+
+                };
+            }
+            return item;
+        });
+        if (index == 0) {
+            return {
+
+            }
+        }
+        setQuestion(newArr);
+        setIndex(index - 1);
+        // setSelectedValue(selectedValue);
+        dispatch(que_action_Options(newArr));
+        setGoBack(true)
+        questions;
+
+
+
+        console.log("hiii ", questions);
+    }
 
     useEffect(() => {
         console.log(getData);
@@ -139,6 +168,14 @@ const QueWithOption = () => {
                         </View>
                     </View>
                 </Modal>
+            </View>
+            <View>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={goBack}
+                >
+                    <Text style={styles.buttonText}>back</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
